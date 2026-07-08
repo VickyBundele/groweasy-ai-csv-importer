@@ -1,10 +1,21 @@
 FROM node:20-alpine
+
 WORKDIR /app
-ARG NEXT_PUBLIC_API_URL=http://localhost:4000
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 COPY package*.json ./
-RUN npm install
+
+RUN npm ci
+
 COPY . .
+
+ARG NEXT_PUBLIC_API_URL=https://groweasy-ai-csv-importer-backend.onrender.com
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 RUN npm run build
-EXPOSE 3000
+
+EXPOSE 10000
+
+ENV PORT=10000
+ENV HOSTNAME=0.0.0.0
+
 CMD ["npm", "start"]
