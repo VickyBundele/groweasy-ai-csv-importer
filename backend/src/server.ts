@@ -85,6 +85,19 @@ app.use((error: unknown, _req: express.Request, res: express.Response, _next: ex
   res.status(500).json({ message: "Unexpected server error" });
 });
 
-app.listen(port, () => {
-  console.log(`GrowEasy importer API running on http://localhost:${port}`);
+const host = "0.0.0.0";
+
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    ok: true,
+    service: "GrowEasy AI CSV Importer API"
+  });
+});
+
+app.get("/healthz", (_req, res) => {
+  res.status(200).json({ ok: true });
+});
+
+app.listen(port, host, () => {
+  console.log(`GrowEasy importer API running on ${host}:${port}`);
 });
